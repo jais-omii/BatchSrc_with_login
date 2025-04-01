@@ -5,7 +5,7 @@ import pyrogram
 from pyrogram import Client, filters, enums
 from pyrogram.errors import FloodWait, UserIsBlocked, InputUserDeactivated, UserAlreadyParticipant, InviteHashExpired, UsernameNotOccupied
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message 
-from config import API_ID, API_HASH, ERROR_MESSAGE
+from config import API_ID, API_HASH, ADMINS, ERROR_MESSAGE
 from database.db import db
 from TechVJ.strings import HELP_TXT
 
@@ -68,6 +68,24 @@ async def send_start(client: Client, message: Message):
         reply_to_message_id=message.id
     )
     return
+
+# set Commands
+@Client.on_message(filters.command("set"))
+async def send_set(client: Client, message: Message):
+    if message.from_user.id not in ADMINS:
+        await message.reply("You are not authorized to use this command.")
+        return
+     
+    await client.set_bot_commands([
+        BotCommand("start", "🚀 Check, I'm Alive!"),
+        BotCommand("login", "🔑 For Private"),
+        BotCommand("logout", "🚪 Get out of the bot"),
+        BotCommand("help", "❓ How to Use the bot"),
+        BotCommand("cancel", "🚫 Cancel batch process")
+    ])
+ 
+    await message.reply("✅ Commands configured successfully!")
+
 
 
 # help command
