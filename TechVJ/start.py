@@ -69,23 +69,6 @@ async def send_start(client: Client, message: Message):
     )
     return
 
-# set Commands
-@Client.on_message(filters.command(["set"]))
-async def send_set(client: Client, message: Message):
-    if message.from_user.id not in ADMINS:
-        await message.reply("You are not authorized to use this command.")
-        return
-     
-    await client.set_bot_commands([
-        BotCommand("start", "🚀 Check, I'm Alive!"),
-        BotCommand("login", "🔑 For Private"),
-        BotCommand("logout", "🚪 Get out of the bot"),
-        BotCommand("help", "❓ How to Use the bot"),
-        BotCommand("cancel", "🚫 Cancel batch process")
-    ])
- 
-    await message.reply("✅ Commands configured successfully!")
-
 
 
 # help command
