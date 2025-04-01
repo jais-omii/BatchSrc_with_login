@@ -70,7 +70,7 @@ async def send_start(client: Client, message: Message):
     return
 
 # set Commands
-@Client.on_message(filters.command("set"))
+@Client.on_message(filters.command(["set"]))
 async def send_set(client: Client, message: Message):
     if message.from_user.id not in ADMINS:
         await message.reply("You are not authorized to use this command.")
